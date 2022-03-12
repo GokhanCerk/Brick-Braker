@@ -35,4 +35,13 @@ public class Paddle : MonoBehaviour
             transform.position = new Vector2(rightScreenEdge, transform.position.y);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("health")) {
+            gm.UpdateLives(1);
+            Destroy(collision.gameObject);
+        }
+        
+    }
 }

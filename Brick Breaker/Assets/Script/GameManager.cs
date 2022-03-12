@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
             lives = 0;
             GameOver();
         }
-        // Check for no lives left and trigger the end of the game
         livesText.text = "Lives: " + lives;
     }
 

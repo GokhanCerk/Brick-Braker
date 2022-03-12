@@ -10,6 +10,7 @@ public class BallScript : MonoBehaviour
     public float speed;
     public Transform explosion;
     public GameManager gm;
+    public Transform powerUp;
 
     void Start()
     {
@@ -50,6 +51,12 @@ public class BallScript : MonoBehaviour
     {
         if (collision.transform.CompareTag("brick"))
         {
+           int randomChance = Random.Range(1, 101);
+            if (randomChance < 50)
+            {
+                Instantiate(powerUp, collision.transform.position, collision.transform.rotation);
+            }
+
            Transform newExplosion = Instantiate(explosion, collision.transform.position, collision.transform.rotation);
            Destroy(newExplosion.gameObject, 2.5f);
            gm.UpdateScore(collision.gameObject.GetComponent<BrickScript>().point);
