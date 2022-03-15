@@ -38,7 +38,7 @@ public class Paddle : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("health")) {
+        if (collision.CompareTag("lives")) {
             gm.UpdateLives(1);
             Destroy(collision.gameObject);
         }

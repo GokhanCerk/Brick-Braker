@@ -14,7 +14,10 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public bool gameOver;
     public GameObject gameOverPanel;
+    public GameObject loadScreenPanel;
     public int numberOfBricks;
+    public Transform[] levels;
+    public int currentLevelIndex = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +27,10 @@ public class GameManager : MonoBehaviour
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
     }
 
+  /// <summary>
+  /// Update Score
+  /// </summary>
+  /// <param name="changeInLives"></param>
     public void UpdateLives(int changeInLives)
     {
         lives += changeInLives;
@@ -35,32 +42,71 @@ public class GameManager : MonoBehaviour
         livesText.text = "Lives: " + lives;
     }
 
+
+    /// <summary>
+    /// Update Number Of Bricks
+    /// </summary>
     public void UpdateNumberOfBricks()
     {
         numberOfBricks--;
         if (numberOfBricks <= 0) {
-            // Next Level
-            GameOver();
+
+            if (currentLevelIndex >= levels.Length - 1)
+            {
+                GameOver();
+            }
+            else
+            {
+              
+                loadScreenPanel.SetActive(true);
+                loadScreenPanel.GetComponentInChildren<Text>().text = "Level " + (currentLevelIndex + 2);
+                Invoke("LoadLevel",3f);
+            }
+
+            
         }
     }
 
+    void LoadLevel()
+    {
+        currentLevelIndex++;
+        loadScreenPanel.SetActive(false);
+        Instantiate(levels[currentLevelIndex], Vector2.zero, Quaternion.identity);
+        numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
+        gameOver = false;
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
     void GameOver()
     {
         gameOver = true;
         gameOverPanel.SetActive(true);
     }
 
+    /// <summary>
+    /// Loading Main Scene
+    /// </summary>
     public void PlayAgain()
     {
         SceneManager.LoadScene("Main");
     }
 
+    /// <summary>
+    /// Quit Game
+    /// </summary>
     public void Quit()
     {
         Application.Quit();
         Debug.Log("Game Quit");
     }
 
+    /// <summary>
+    /// Update Score
+    /// </summary>
+    /// <param name="points"></param>
     public void UpdateScore(int points) {
         scores += points;
         scoreText.text = "Score: " + scores;
