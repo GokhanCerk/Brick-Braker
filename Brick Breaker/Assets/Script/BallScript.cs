@@ -11,7 +11,8 @@ public class BallScript : MonoBehaviour
     public Transform explosion;
     public GameManager gm;
     public Transform powerUp;
-    public AudioSource audio;
+    public new AudioSource audio;
+    public BrickScript bs;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -60,7 +61,6 @@ public class BallScript : MonoBehaviour
             }
             else {
                 int randomChance = Random.Range(1, 101);
-                Debug.Log(randomChance);
                 if (randomChance < 10)
                 {
                     Instantiate(powerUp, collision.transform.position, collision.transform.rotation);
@@ -74,8 +74,17 @@ public class BallScript : MonoBehaviour
                 Destroy(collision.gameObject);
             }
 
+            //if (gm.scores == 2 && bs.hitsToBreak == 1)
+            //{
+            //    Debug.Log("Increase ball speed");
+            //    GetComponent<BallScript>().speed = speed + 200;
+            //}
+
+
+
+
             audio.Play();
-          
+            
         }
     }
 }
