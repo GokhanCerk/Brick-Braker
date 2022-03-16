@@ -96,7 +96,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            highScoreText.text = PlayerPrefs.GetString("HIGHSCORE") + "High Score: " + highScore + "\n" + "Can you beat it?";
+            highScoreText.text = "High Score by " + PlayerPrefs.GetString("HIGHSCORENAME")  + " " + highScore +
+                "\n" + "Can you beat it?";
         }
     }
 
@@ -122,8 +123,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void Quit()
     {
-        Application.Quit();
-        Debug.Log("Game Quit");
+        SceneManager.LoadScene("Start Menu");
     }
 
     /// <summary>
